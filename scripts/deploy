@@ -1,0 +1,64 @@
+#!/bin/bash
+
+#
+# $1: play to run
+#
+
+#
+# Config
+#
+
+PLAYBASE=~ansible/ansible/playbooks
+
+#
+# Functions
+#
+
+# error
+error()
+{
+	case $1 in
+	11)
+		echo "Please specify playbook file"
+		;;
+	*)
+		echo "Unknown error"
+		;;
+	esac
+	exit $1
+}
+
+# run
+run()
+{
+	cd $PLAYBASE/$1
+	# We don't want these
+	touch main.retry
+	rm *.retry
+
+	# https://stackoverflow.com/questions/51622712/ansible-requires-python-apt-but-its-already-installed
+	ansible-playbook main.yml -e ansible_python_interpreter=/usr/bin/python3
+}
+
+#
+# Main
+#
+
+case $1 in
+"")
+	error 11
+	;;
+all)
+	cd $PLAYBASE
+
+	ALL=$(echo *)
+
+	for I in $ALL
+	do
+		run $I
+	done
+	;;
+*)
+	run $1
+	;;
+esac

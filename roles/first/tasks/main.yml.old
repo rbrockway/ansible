@@ -1,0 +1,140 @@
+#########
+# Repos #
+#########
+
+#- apt_repository: repo='deb http://ftp.au.debian.org/debian/ jessie main non-free contrib' state=present
+#- apt_repository: repo='deb http://security.debian.org/ jessie/updates main non-free contrib' state=present
+#- apt_repository: repo='deb http://ftp.au.debian.org/debian/ jessie-updates main non-free contrib' state=present
+#- apt_repository: repo='deb http://http.debian.net/debian jessie-backports main' state=present
+
+##########
+# Update #
+##########
+
+#- apt: update_cache=yes upgrade=yes
+- name : update cache if >4hr old
+  apt: update_cache=yes cache_valid_time=14400
+
+#############################
+# Standard Packages Present #
+#############################
+
+- name: install alpine
+  apt: name=alpine state=present
+
+- name: install ansible
+  apt: name=ansible state=present
+
+- name: install autoconf
+  apt: name=autoconf state=present
+
+- name: install cgmanager
+  apt: name=cgmanager state=present
+
+- name: install cgroup-bin
+  apt: name=cgroup-bin state=present
+
+- name: install cgroup-tools
+  apt: name=cgroup-tools state=present
+
+- name: install cgroupfs-mount
+  apt: name=cgroupfs-mount state=present
+
+- name: install cups-bsd
+  apt: name=cups-bsd state=present
+
+- name: install dump
+  apt: name=dump state=present
+
+- name: install finger
+  apt: name=finger state=present
+
+- name: install firmware-linux-free
+  apt: name=firmware-linux-free state=present
+
+- name: install firmware-linux-nonfree
+  apt: name=firmware-linux-nonfree state=present
+
+- name: install firmware-realtek
+  apt: name=firmware-realtek state=present
+
+- name: install git
+  apt: name=git state=present
+
+- name: install ipcalc
+  apt: name=ipcalc state=present
+
+- name: install links2
+  apt: name=links2 state=present
+
+- name: install lynx
+  apt: name=lynx state=present
+
+- name: install netcat-traditional
+  apt: name=netcat-traditional state=present
+
+- name: install nmap
+  apt: name=nmap state=present
+
+- name: install ntpdate
+  apt: name=ntpdate state=present
+
+- name: install mtr
+  apt: name=mtr state=present
+
+- name: install octave
+  apt: name=octave state=present
+
+- name: install openntpd
+  apt: name=openntpd state=present
+
+- name: install openbsd-inetd
+  apt: name=openbsd-inetd state=present
+
+- name: install postfix
+  apt: name=postfix state=present
+
+- name: install rsync
+  apt: name=rsync state=present
+
+- name: install screen
+  apt: name=screen state=present
+
+- name: install slay
+  apt: name=slay state=present
+
+- name: install ssh
+  apt: name=ssh state=present
+
+- name: install ssh-askpass
+  apt: name=ssh-askpass state=present
+
+- name: install sudo
+  apt: name=sudo state=present
+
+- name: install tshark
+  apt: name=tshark state=present
+
+- name: install ulatency
+  apt: name=ulatency state=present
+
+- name: install uptimed
+  apt: name=uptimed state=present
+
+- name: install youtube-dl
+  apt: name=youtube-dl state=present
+
+#########
+# Files #
+#########
+
+- copy: src=etc/inetd.conf dest=/etc/inetd.conf owner=root group=root mode=640
+- copy: src=etc/rsyncd.conf dest=/etc/rsyncd.conf owner=root group=root mode=640
+- copy: src=etc/rsyncd.exclude dest=/etc/rsyncd.exclude owner=root group=root mode=640
+- copy: src=etc/rsyncd.secrets dest=/etc/rsyncd.secrets owner=root group=root mode=600
+
+############
+# Services #
+############
+
+- service: name=ulatencyd enabled=yes state=started

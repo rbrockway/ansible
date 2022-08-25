@@ -1,0 +1,28 @@
+############
+# Services #
+############
+
+#- name: Stop ulatencyd
+#  systemd:
+#    name: ulatencyd
+#    state: stopped
+  
+
+###################
+# Packages Absent #
+###################
+
+- name: Remove packages
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_list:
+      - cowsay
+      - linux-image-rt-amd64
+      - linux-image-4.9.0-5-rt-amd64
+      # Causes cpu pegging problems on Debian 10.
+      - ksmtuned
+      - resolvconf
+      - ulatency
+      - ulatencyd
+      - xcowsay

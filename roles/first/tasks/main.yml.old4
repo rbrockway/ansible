@@ -1,0 +1,305 @@
+#############
+# Repo Keys #
+#############
+
+- name: install apt-transport-https
+  apt: name=apt-transport-https state=present
+
+- name: Adding Microsoft Repo Key
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+
+#- name: Adding VirtualBox Repo Key
+#  apt_key:
+#    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+
+#- name: Adding Vivaldi Repo Key
+#  apt_key:
+#    url: http://repo.vivaldi.com/stable/linux_signing_key.pub
+
+
+#########
+# Repos #
+#########
+
+#- apt_repository: repo='deb http://ftp.au.debian.org/debian/ jessie main non-free contrib' state=present
+#- apt_repository: repo='deb http://security.debian.org/ jessie/updates main non-free contrib' state=present
+#- apt_repository: repo='deb http://ftp.au.debian.org/debian/ jessie-updates main non-free contrib' state=present
+#- apt_repository: repo='deb http://http.debian.net/debian jessie-backports main' state=present
+
+- name: Remove Debian Australia Repo (main, contrib, non-free)
+  apt_repository: repo='deb http://ftp.au.debian.org/debian/ stretch main contrib non-free' state=absent
+
+#- name: Remove Debian Source Repo (main)
+#  apt_repository: repo='deb-src http://ftp.debian.org/debian/ stretch main' state=absent
+
+- name: Add Debian Repo (main, contrib, non-free)
+  apt_repository: repo='deb http://ftp.debian.org/debian/ stretch main contrib non-free' state=present
+
+#- name: Add Debian Source Repo (main)
+#  apt_repository: repo='deb-src http://ftp.debian.org/debian/ stretch main' state=present
+
+- name: Add Debian Security Repo (main, contrib, non-free)
+  apt_repository: repo='deb http://security.debian.org/debian-security stretch/updates main contrib non-free' state=present
+
+#- name: Add Debian Source Security Repo (main)
+#  apt_repository: repo=' deb-src http://security.debian.org/debian-security stretch/updates main' state=present
+
+- name: Add Debian Volatile Repo (main)
+  apt_repository: repo='deb http://ftp.debian.org/debian/ stretch-updates main' state=present
+
+- name: Add Debian Source Volatile Repo (main)
+  apt_repository: repo='deb-src http://ftp.debian.org/debian/ stretch-updates main' state=present
+
+- name: Adding Microsoft Repo
+  apt_repository: repo='deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main' state=present
+
+##########
+# Update #
+##########
+
+- name: install aptitude
+  apt: name=aptitude state=present
+
+#- name : update cache if >4hr old
+  #apt: cache_valid_time=14400 update_cache=yes upgrade=yes
+  #apt: cache_valid_time=14400 update_cache=yes
+
+#############################
+# Standard Packages Present #
+#############################
+
+- name: install acct
+  apt: name=acct state=present
+
+- name: install acpi
+  apt: name=acpi state=present
+
+- name: install alpine
+  apt: name=alpine state=present
+
+- name: install atop
+  apt: name=atop state=present
+
+- name: install auditd
+  apt: name=auditd state=present
+
+- name: install autoconf
+  apt: name=autoconf state=present
+
+- name: install binutils
+  apt: name=binutils state=present
+
+- name: install blktrace
+  apt: name=blktrace state=present
+
+- name: install cgmanager
+  apt: name=cgmanager state=present
+
+- name: install cgroup-bin
+  apt: name=cgroup-bin state=present
+
+- name: install cgroup-tools
+  apt: name=cgroup-tools state=present
+
+- name: install cgroupfs-mount
+  apt: name=cgroupfs-mount state=present
+
+- name: install cups-bsd
+  apt: name=cups-bsd state=present
+
+- name: install curl
+  apt: name=curl state=present
+
+- name: install dkms
+  apt: name=dkms state=present
+
+- name: install dnsutils
+  apt: name=dnsutils state=present
+
+- name: install dos2unix
+  apt: name=dos2unix state=present
+
+- name: install dump
+  apt: name=dump state=present
+
+- name: install ethtool
+  apt: name=ethtool state=present
+
+- name: install finger
+  apt: name=finger state=present
+
+- name: install firmware-linux-free
+  apt: name=firmware-linux-free state=present
+
+- name: install firmware-linux-nonfree
+  apt: name=firmware-linux-nonfree state=present
+
+- name: install firmware-realtek
+  apt: name=firmware-realtek state=present
+
+- name: install git
+  apt: name=git state=present
+
+- name: install gnupg
+  apt: name=gnupg state=present
+
+- name: install htop
+  apt: name=htop state=present
+
+- name: install iotop
+  apt: name=iotop state=present
+
+- name: install ipcalc
+  apt: name=ipcalc state=present
+
+- name: install jq
+  apt: name=jq state=present
+
+- name: install links2
+  apt: name=links2 state=present
+
+- name: install lynx
+  apt: name=lynx state=present
+
+- name: install net-tools
+  apt: name=net-tools state=present
+
+- name: install netcat-traditional
+  apt: name=netcat-traditional state=present
+
+- name: install nmap
+  apt: name=nmap state=present
+
+- name: install ntpdate
+  apt: name=ntpdate state=present
+
+- name: install mtr
+  apt: name=mtr state=present
+
+- name: install octave
+  apt: name=octave state=present
+
+- name: install octave-general
+  apt: name=octave-general state=present
+
+- name: install octave-linear-algebra
+  apt: name=octave-linear-algebra state=present
+
+- name: install octave-miscellaneous
+  apt: name=octave-miscellaneous state=present
+
+- name: install octave-specfun
+  apt: name=octave-specfun state=present
+
+- name: install octave-symbolic
+  apt: name=octave-symbolic state=present
+
+- name: install openntpd
+  apt: name=openntpd state=present
+
+- name: install openbsd-inetd
+  apt: name=openbsd-inetd state=present
+
+- name: install parallel
+  apt: name=parallel state=present
+
+- name: install pcregrep
+  apt: name=pcregrep state=present
+
+- name: install policycoreutils-python-utils
+  apt: name=policycoreutils-python-utils state=present
+
+- name: install postfix
+  apt: name=postfix state=present
+
+#- name: install powershell
+#  apt: name=powershell state=present
+
+- name: install procmail
+  apt: name=procmail state=present
+
+- name: install quota
+  apt: name=quota state=present
+
+- name: install rsync
+  apt: name=rsync state=present
+
+- name: install screen
+  apt: name=screen state=present
+
+- name: install sdate
+  apt: name=sdate state=present
+
+- name: install semanage-utils
+  apt: name=semanage-utils state=present
+
+- name: install setools
+  apt: name=setools state=present
+
+- name: install slay
+  apt: name=slay state=present
+
+- name: install snapd
+  apt: name=snapd state=present
+
+- name: install ssh
+  apt: name=ssh state=present
+
+- name: install ssh-askpass
+  apt: name=ssh-askpass state=present
+
+- name: install stress
+  apt: name=stress state=present
+
+- name: install stress-ng
+  apt: name=stress-ng state=present
+
+- name: install sudo
+  apt: name=sudo state=present
+
+- name: install sysstat
+  apt: name=sysstat state=present
+
+- name: install tshark
+  apt: name=tshark state=present
+
+- name: install ulatency
+  apt: name=ulatency state=present
+
+- name: install uptimed
+  apt: name=uptimed state=present
+
+- name: install vnstat
+  apt: name=vnstat state=present
+
+- name: install whois
+  apt: name=whois state=present
+
+- name: install xfsdump
+  apt: name=xfsdump state=present
+
+- name: install xfsprogs
+  apt: name=xfsprogs state=present
+
+- name: install youtube-dl
+  apt: name=youtube-dl state=present
+
+#########
+# Files #
+#########
+
+#- copy: src=etc/inetd.conf dest=/etc/inetd.conf owner=root group=root mode=640
+#- copy: src=etc/rsyncd.conf dest=/etc/rsyncd.conf owner=root group=root mode=640
+#- copy: src=etc/rsyncd.exclude dest=/etc/rsyncd.exclude owner=root group=root mode=640
+#- copy: src=etc/rsyncd.secrets dest=/etc/rsyncd.secrets owner=root group=root mode=600
+
+###################
+# Authorized_keys #
+###################
+
+- name: Allow root@rigel to ssh to root
+  authorized_key:
+    user: root
+    state: present
+    key: "{{ lookup('file', 'rigel_dumpling_id_rsa.pub') }}"

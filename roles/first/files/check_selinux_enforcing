@@ -1,0 +1,69 @@
+#!/bin/bash
+
+#
+# Robert Brockway
+#
+# 12 June 2022
+#
+
+#
+# Functions
+#
+
+checkEnforceStatus()
+{
+	STATUS=$(getenforce)
+
+	case $STATUS in
+	Enforcing)
+		echo OK
+		exit 0
+		;;
+	Permissive)
+		echo CRIT
+		exit 2
+		;;
+	*)
+		echo UNKNOWN
+		exit 3
+		;;
+	esac
+}
+
+error()
+{
+	case $1 in
+	20)
+		MESSAGE="Command getenforce not present"
+		;;
+	*)
+		MESSAGE="Unknown error"
+		;;
+	esac
+
+	echo $MESSAGE
+	exit $1
+}
+
+initialise()
+{
+	command -v getenforce &> /dev/null
+	case $? in
+	0)
+		true
+		;;
+	*)
+		error 20
+		;;
+	esac
+}
+
+
+
+
+#
+# Main
+#
+
+initialise
+checkEnforceStatus

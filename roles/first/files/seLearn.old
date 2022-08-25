@@ -1,0 +1,153 @@
+#!/bin/bash
+
+set -u
+
+#
+# Robert Brockway
+#
+# 12 June 2022
+#
+
+#
+# Config
+#
+
+AUDITLOG=/var/log/audit/audit.log
+MAKEFILE=/usr/share/selinux/devel/Makefile
+PPFILE=local.pp
+TEFILE=local.te
+
+#
+# Functions
+#
+
+buildPP()
+{
+	make -f $MAKEFILE $PPFILE &> /dev/null
+	case $? in
+	0)
+		echo "PP file $PPFILE built successfully"
+		;;
+	*)
+		error 60
+		;;
+	esac
+}
+
+buildTE()
+{
+	cat $AUDITLOG | audit2allow -m local > $TEFILE 2> /dev/null
+	case $? in
+	0)
+		echo "TE file $TEFILE built successfully"
+		;;
+	*)
+		error 40
+		;;
+	esac
+
+}
+
+error()
+{
+	case $1 in
+	10)
+		MESSAGE="Unable to find command mktemp"
+		;;
+	15)
+		MESSAGE="Unable to find command audit2allow"
+		;;
+	20)
+		MESSAGE="Unable to create temp dir $TMPDIR"
+		;;
+	25)
+		MESSAGE="Unable to set current working directory to $TMPDIR"
+		;;
+	40)
+		MESSAGE="Unable to build TE file $TEFILE"
+		;;
+	60)
+		MESSAGE="Unable to build PP file $PPFILE"
+		;;
+	80)
+		MESSAGE="Unable to load PP file $PPFILE"
+		;;
+	*)
+		MESSAGE="Unknown error"
+		;;
+	esac
+
+	echo $MESSAGE
+	exit $1
+}
+
+initialise()
+{
+	command -v mktemp &> /dev/null
+	case $? in
+	0)
+		true
+		#echo "Command mktemp available"
+		;;
+	*)
+		error 10
+		;;
+	esac
+
+	command -v audit2allow &> /dev/null
+	case $? in
+	0)
+		true
+		#echo "Command audit2allow available"
+		;;
+	*)
+		error 50
+		;;
+	esac
+
+	TMPDIR=$(mktemp -d)
+	case $? in
+	0)
+		true
+		#echo "Temp directory $TMPDIR created successfully"
+		;;
+	*)
+		error 20
+		;;
+	esac
+
+	cd $TMPDIR
+	case $? in
+	0)
+		true
+		#echo "Current working directory set to $TMPDIR"
+		;;
+	*)
+		error 25
+		;;
+	esac
+}
+
+loadPP()
+{
+	semodule -i $PPFILE &> /dev/null
+	case $? in
+	0)
+		echo "PP File $PPFILE loaded successfully"
+		;;
+	*)
+		error 80
+		;;
+	esac
+
+}
+
+
+#
+# Main
+#
+
+initialise
+buildTE
+buildPP
+loadPP

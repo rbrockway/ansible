@@ -1,0 +1,25 @@
+# GLOBAL OPTIONS
+
+comment = System
+use chroot = no
+uid = root
+max connections=10
+lock file = /var/lock/rsyncd
+read only = yes
+list = yes
+auth users = rsbackup
+secrets file = /etc/rsyncd.secrets
+strict modes = yes
+hosts allow = 192.168.120.15,192.168.120.16,192.168.120.18,192.168.120.56,192.168.120.251,127.0.0.1
+ignore errors = no
+ignore nonreadable = yes
+#log format = %t: host %h (%a) %o %f (%l bytes). Total %b bytes.
+timeout = 600
+
+# MODULE OPTIONS
+
+[root]
+        path = /
+
+[boot]
+        path = /boot

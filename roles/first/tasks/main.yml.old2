@@ -1,0 +1,73 @@
+#########
+# Repos #
+#########
+
+#- apt_repository: repo='deb http://ftp.au.debian.org/debian/ jessie main non-free contrib' state=present
+#- apt_repository: repo='deb http://security.debian.org/ jessie/updates main non-free contrib' state=present
+#- apt_repository: repo='deb http://ftp.au.debian.org/debian/ jessie-updates main non-free contrib' state=present
+#- apt_repository: repo='deb http://http.debian.net/debian jessie-backports main' state=present
+
+##########
+# Update #
+##########
+
+#- apt: update_cache=yes upgrade=yes
+- name : update cache if >4hr old
+  apt: update_cache=yes cache_valid_time=14400
+
+#############################
+# Standard Packages Present #
+#############################
+
+- name: install important packages
+  apt: name=alpine state=present
+  apt: name=ansible state=present
+  apt: name=autoconf state=present
+  apt: name=cgmanager state=present
+  apt: name=cgroup-bin state=present
+  apt: name=cgroup-tools state=present
+  apt: name=cgroupfs-mount state=present
+  apt: name=cups-bsd state=present
+  apt: name=dump state=present
+  apt: name=finger state=present
+  apt: name=firmware-linux-free state=present
+  apt: name=firmware-linux-nonfree state=present
+  apt: name=firmware-realtek state=present
+  apt: name=git state=present
+  apt: name=ipcalc state=present
+  apt: name=links2 state=present
+  apt: name=lynx state=present
+  apt: name=netcat-traditional state=present
+  apt: name=nmap state=present
+  apt: name=ntpdate state=present
+  apt: name=mtr state=present
+  apt: name=octave state=present
+  apt: name=openntpd state=present
+  apt: name=openbsd-inetd state=present
+  apt: name=postfix state=present
+  apt: name=rsync state=present
+  apt: name=ssh state=present
+  apt: name=ssh-askpass state=present
+  apt: name=sudo state=present
+  apt: name=tshark state=present
+  apt: name=ulatency state=present
+  apt: name=uptimed state=present
+  apt: name=xfsdump state=present
+  apt: name=xfsprogs state=present
+  apt: name=youtube-dl state=present
+
+#########
+# Files #
+#########
+
+- name: install rsyncd config
+  copy: src=etc/inetd.conf dest=/etc/inetd.conf owner=root group=root mode=640
+  copy: src=etc/rsyncd.conf dest=/etc/rsyncd.conf owner=root group=root mode=640
+  copy: src=etc/rsyncd.exclude dest=/etc/rsyncd.exclude owner=root group=root mode=640
+  copy: src=etc/rsyncd.secrets dest=/etc/rsyncd.secrets owner=root group=root mode=600
+
+############
+# Services #
+############
+
+- service: name=ulatencyd enabled=yes state=started

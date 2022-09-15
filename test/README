@@ -1,1 +1,0 @@
-ansible-pull -i localhost -U https://github.com/rbrockway/ansible.git test/playbooks/ansible/main.yml

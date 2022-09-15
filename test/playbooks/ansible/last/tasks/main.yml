@@ -1,0 +1,27 @@
+############
+# Services #
+############
+
+#- name: Stop ulatencyd
+#  systemd:
+#    name: ulatencyd
+#    state: stopped
+  
+
+###################
+# Packages Absent #
+###################
+
+- name: Remove packages
+  apt:
+    name: "{{ packages }}"
+    state: absent
+  vars:
+    packages:
+      - awscli
+      - cowsay
+      - fortunes-off
+      - fortunes-it-off
+      - kubernetes
+      - sl
+      - xcowsay

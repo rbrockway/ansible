@@ -1,0 +1,13 @@
+---
+
+- hosts: localhost
+  become: yes
+  become_user: root
+  become_method: sudo
+
+  roles:
+    - role: first
+    - role: fortune
+    #- role: ansible
+    - role: kubernetes
+    - role: last

@@ -1,0 +1,17 @@
+#############################
+# Standard Packages Present #
+#############################
+
+- name: Install packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+     - fortune
+     - fortunes
+     - fortunes-bofh-excuses
+     - fortunes-debian-hints
+     - fortunes-mario
+     - fortunes-spam
+     - fortunes-ubuntu-server

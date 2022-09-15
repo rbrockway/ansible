@@ -1,0 +1,75 @@
+########################
+# APT Update & Upgrade #
+########################
+
+- name : Apt update & upgrade
+  ansible.builtin.apt:
+    update_cache: yes
+    upgrade: safe
+
+#############################
+# Standard Packages Present #
+#############################
+
+- name: Install packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+     - acct
+     - acpi
+     - alpine
+     - apt-file
+     - apt-transport-https
+     - aptitude
+     - atop
+     - auditd
+     - autoconf
+     - bat
+     - bats
+     - binutils
+     - blktrace
+     - cgroup-tools
+     - cgroupfs-mount
+     - curl
+     - dkms
+     - dnsutils
+     - dos2unix
+     - dump
+     - ethtool
+     - finger
+     - flatpak
+     - git
+     - gnupg
+     - htop
+     - iotop
+     - ipcalc
+     - jq
+     - links2
+     - ltrace
+     - lynx
+     - net-tools
+     - nicstat
+     - nmap
+     - ntpdate
+     - make
+     - mailutils
+     - mtr
+     - parallel
+     - pcregrep
+     - rsync
+     - screen
+     - sdate
+     - slay
+     - ssh
+     - ssh-askpass
+     - strace
+     - sudo
+     - sysstat
+     - tiptop
+     - tshark
+     - uptimed
+     - vnstat
+     - watchdog
+     - whois

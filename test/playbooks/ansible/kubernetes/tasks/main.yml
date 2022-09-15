@@ -1,0 +1,21 @@
+############
+# Packages #
+############
+
+- name: Install packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+     - nodejs
+     - npm
+
+###########
+# AWS CDK #
+###########
+
+- name: Install aws-cdk using NPM
+  community.general.npm:
+    name: aws-cdk
+    global: yes

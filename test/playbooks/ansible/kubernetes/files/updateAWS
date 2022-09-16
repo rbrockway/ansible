@@ -1,0 +1,116 @@
+#!/bin/bash
+
+#
+# Robert Brockway
+# 16 Sept 2022
+#
+
+#
+# Config
+#
+
+AWSURL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+AWSZIP="awscliv2.zip"
+
+#
+# Functions
+#
+
+downloadAwsCli()
+{
+	echo "Downloading AWS CLI"
+	curl -s "$AWSURL" -o "$AWSZIP" &> /dev/null
+	case $? in
+	0)
+		echo "AWS CLI successfully downloaded and saved as $AWSZIP"
+		;;
+	*)
+		error 50
+		;;
+	esac
+
+	echo "Unzipping $AWSZIP"
+	#unzip $AWSZIP &> /dev/null
+	unzip "$AWSZIP"
+	case $? in
+	0)
+		echo "AWS CLI successfully unzipped"
+		;;
+	*)
+		error 55
+		;;
+	esac
+
+}
+
+error()
+{
+	case $1 in
+	20)
+		MESSAGE="Command $2 not available"
+		;;
+	25)
+		MESSAGE="Unable to create working directory $WORKDIR"
+		;;
+	28)
+		MESSAGE="Unable to change directory to $WORKDIR"
+		;;
+	50)
+		MESSAGE="Attempt to download AWS CLI failed"
+		;;
+	*)
+		MESSAGE="Unknown error"
+		;;
+	esac
+
+	echo $MESSAGE
+	logger $MESSAGE
+}
+
+initialise()
+{
+	# We need these commands for the script to complete
+	COMMANDLIST="curl logger mktemp unzip"
+
+	for I in $COMMANDLIST
+	do
+		command -v $I &> /dev/null
+		case $? in
+		0)
+			echo "Command $I available"
+			;;
+		*)
+			error 20 $I
+			;;
+		esac
+	done
+
+	WORKDIR=$(mktemp -d /tmp/aws-install-XXXXXX)
+	case $? in
+	0)
+		echo "Working directory $WORKDIR created successfully"
+		;;
+	*)
+		error 25
+		;;
+	esac
+
+	cd $WORKINGDIR
+	case $? in
+	0)
+		echo "Changed directory to $WORKDIR"
+		;;
+	*)
+		error 28
+		;;
+	esac
+
+}
+
+
+#
+# Main
+#
+
+initialise
+downloadAwsCli

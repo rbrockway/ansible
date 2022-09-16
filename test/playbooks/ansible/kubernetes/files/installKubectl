@@ -1,0 +1,174 @@
+#!/bin/bash
+
+set -u
+
+#
+# Robert Brockway
+# 16 Sept 2022
+#
+
+#
+# Config
+#
+
+AWSBIN=/usr/local/bin/aws
+AWSURL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+AWSZIP="awscliv2.zip"
+
+#
+# Functions
+#
+
+cleanup()
+{
+	echo "Removing working directory"
+	rm -rf $WORKDIR
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 90
+		;;
+	esac
+
+}
+
+downloadKubectl()
+{
+	echo "Downloading kubectl"
+	VERSION=$(curl -s https://storage.googleapis.com/kubernetes/release/release/stable.txt)
+	case $? in
+	0)
+		echo "Version: $VERSION"
+		;;
+	*)
+		error 50
+		;;
+	esac
+
+	curl -LO https://storage.googleapis.com/kubernetes/release/release/$VERSION/bin/linux/amd64/kubectl
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 55
+		;;
+	esac
+}
+
+installAWS()
+{
+	echo "Installing/Updating AWS CLI"
+	aws/install --update &> /dev/null
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 70
+		;;
+	esac
+}
+
+unzipAWS()
+{
+	echo "Unzipping $AWSZIP"
+	unzip $AWSZIP &> /dev/null
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 60
+		;;
+	esac
+}
+
+error()
+{
+	case $1 in
+	20)
+		MESSAGE="Command $2 not available"
+		;;
+	25)
+		MESSAGE="Unable to create working directory"
+		;;
+	28)
+		MESSAGE="Unable to change directory to working directory"
+		;;
+	50)
+		MESSAGE="Attempt to download AWS CLI failed"
+		;;
+	60)
+		MESSAGE="Attempt to unzip AWS CLI failed"
+		;;
+	70)
+		MESSAGE="Attempt to install AWS CLI failed"
+		;;
+	90)
+		MESSAGE="Unable to remove working directory"
+		;;
+	*)
+		MESSAGE="Unknown error"
+		;;
+	esac
+
+	echo $MESSAGE
+	logger $MESSAGE
+}
+
+initialise()
+{
+	# We need these commands for the script to complete
+	COMMANDLIST="curl logger mktemp unzip"
+
+	for I in $COMMANDLIST
+	do
+		command -v $I &> /dev/null
+		case $? in
+		0)
+			echo "Command $I available"
+			;;
+		*)
+			error 20 $I
+			;;
+		esac
+	done
+
+	WORKDIR=$(mktemp -d /tmp/aws-install-XXXXXX)
+	case $? in
+	0)
+		echo "Working directory $WORKDIR created successfully"
+		;;
+	*)
+		error 25
+		;;
+	esac
+
+	cd $WORKDIR
+	case $? in
+	0)
+		echo "Changed directory to working directory"
+		;;
+	*)
+		error 28
+		;;
+	esac
+}
+
+
+#
+# Main
+#
+
+initialise
+downloadKubectl
+unzipAWS
+installAWS
+cleanup
+
+
+
+

@@ -34,3 +34,18 @@
   community.general.npm:
     name: aws-cdk
     global: yes
+
+##############
+# Kubernetes #
+##############
+
+- name: Copy /usr/local/sbin/installKubernetes
+  ansible.builtin.copy:
+    src: installKubernetes
+    dest: /usr/local/sbin/installKubernetes
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Install AWS CLI
+  ansible.builtin.command: /usr/local/sbin/installKubernetes

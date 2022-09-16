@@ -11,8 +11,6 @@ set -u
 # Config
 #
 
-AWSBIN=/usr/local/bin/aws
-AWSZIP="awscliv2.zip"
 BASEURL="https://storage.googleapis.com"
 KUBEURL=$BASEURL/kubernetes/release/release"
 
@@ -98,7 +96,7 @@ error()
 		MESSAGE="Unable to change directory to working directory"
 		;;
 	50)
-		MESSAGE="Attempt to download AWS CLI failed"
+		MESSAGE="Attempt to download kubectl failed"
 		;;
 	60)
 		MESSAGE="Attempt to set permissions on kubectl failed"

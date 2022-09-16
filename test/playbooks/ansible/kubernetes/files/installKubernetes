@@ -12,7 +12,7 @@ set -u
 #
 
 BASEURL="https://storage.googleapis.com"
-KUBEURL=$BASEURL/kubernetes/release/release"
+KUBEURL="$BASEURL/kubernetes/release/release"
 
 #
 # Functions
@@ -35,8 +35,8 @@ cleanup()
 
 downloadKubectl()
 {
-	echo "Downloading kubectl"
-	VERSION=$(curl -s $KUBEURL/stable.txt)
+	echo "Getting kubectl version"
+	VERSION=$(curl -s "$KUBEURL/stable.txt")
 	case $? in
 	0)
 		echo "Version: $VERSION"
@@ -46,8 +46,8 @@ downloadKubectl()
 		;;
 	esac
 
-	echo "Dowloading kubectl"
-	curl -LO $KUBEURL/$VERSION/bin/linux/amd64/kubectl
+	echo "Downloading kubectl"
+	curl -sLO "$KUBEURL/$VERSION/bin/linux/amd64/kubectl"
 	case $? in
 	0)
 		echo "Success!"
@@ -58,19 +58,8 @@ downloadKubectl()
 	esac
 }
 
-installKuberctl()
+installKubectl()
 {
-	echo "Setting permissions on kubectl"
-	chmod a+x kubectl
-	case $? in
-	0)
-		echo "Success!"
-		;;
-	*)
-		error 60
-		;;
-	esac
-
 	echo "Making kubectl available"
 	cp kubectl /usr/local/bin
 	case $? in
@@ -79,6 +68,17 @@ installKuberctl()
 		;;
 	*)
 		error 64
+		;;
+	esac
+
+	echo "Setting permissions on kubectl"
+	chmod a+x /usr/local/bin/kubectl
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 65
 		;;
 	esac
 }
@@ -99,10 +99,10 @@ error()
 		MESSAGE="Attempt to download kubectl failed"
 		;;
 	60)
-		MESSAGE="Attempt to set permissions on kubectl failed"
-		;;
-	64)
 		MESSAGE="Attempt to install kubectl failed"
+		;;
+	65)
+		MESSAGE="Attempt to set permissions on kubectl failed"
 		;;
 	90)
 		MESSAGE="Unable to remove working directory"

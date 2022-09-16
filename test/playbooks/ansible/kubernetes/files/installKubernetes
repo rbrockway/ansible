@@ -12,8 +12,9 @@ set -u
 #
 
 AWSBIN=/usr/local/bin/aws
-AWSURL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
 AWSZIP="awscliv2.zip"
+BASEURL="https://storage.googleapis.com"
+KUBEURL=$BASEURL/kubernetes/release/release"
 
 #
 # Functions
@@ -37,7 +38,7 @@ cleanup()
 downloadKubectl()
 {
 	echo "Downloading kubectl"
-	VERSION=$(curl -s https://storage.googleapis.com/kubernetes/release/release/stable.txt)
+	VERSION=$(curl -s $KUBEURL/stable.txt)
 	case $? in
 	0)
 		echo "Version: $VERSION"
@@ -47,7 +48,8 @@ downloadKubectl()
 		;;
 	esac
 
-	curl -LO https://storage.googleapis.com/kubernetes/release/release/$VERSION/bin/linux/amd64/kubectl
+	echo "Dowloading kubectl"
+	curl -LO $KUBEURL/$VERSION/bin/linux/amd64/kubectl
 	case $? in
 	0)
 		echo "Success!"
@@ -58,30 +60,27 @@ downloadKubectl()
 	esac
 }
 
-installAWS()
+installKuberctl()
 {
-	echo "Installing/Updating AWS CLI"
-	aws/install --update &> /dev/null
-	case $? in
-	0)
-		echo "Success!"
-		;;
-	*)
-		error 70
-		;;
-	esac
-}
-
-unzipAWS()
-{
-	echo "Unzipping $AWSZIP"
-	unzip $AWSZIP &> /dev/null
+	echo "Setting permissions on kubectl"
+	chmod a+x kubectl
 	case $? in
 	0)
 		echo "Success!"
 		;;
 	*)
 		error 60
+		;;
+	esac
+
+	echo "Making kubectl available"
+	cp kubectl /usr/local/bin
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 64
 		;;
 	esac
 }
@@ -102,10 +101,10 @@ error()
 		MESSAGE="Attempt to download AWS CLI failed"
 		;;
 	60)
-		MESSAGE="Attempt to unzip AWS CLI failed"
+		MESSAGE="Attempt to set permissions on kubectl failed"
 		;;
-	70)
-		MESSAGE="Attempt to install AWS CLI failed"
+	64)
+		MESSAGE="Attempt to install kubectl failed"
 		;;
 	90)
 		MESSAGE="Unable to remove working directory"
@@ -137,7 +136,7 @@ initialise()
 		esac
 	done
 
-	WORKDIR=$(mktemp -d /tmp/aws-install-XXXXXX)
+	WORKDIR=$(mktemp -d /tmp/kubectl-install-XXXXXX)
 	case $? in
 	0)
 		echo "Working directory $WORKDIR created successfully"
@@ -165,10 +164,5 @@ initialise()
 
 initialise
 downloadKubectl
-unzipAWS
-installAWS
+installKubectl
 cleanup
-
-
-
-

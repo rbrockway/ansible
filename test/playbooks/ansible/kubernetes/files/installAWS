@@ -45,6 +45,12 @@ downloadAWS()
 	esac
 }
 
+installAWS()
+{
+	echo "Installing AWS CLI"
+	aws/install
+}
+
 unzipAWS()
 {
 	echo "Unzipping $AWSZIP"
@@ -137,4 +143,5 @@ initialise()
 initialise
 downloadAWS
 unzipAWS
+installAWS
 cleanup

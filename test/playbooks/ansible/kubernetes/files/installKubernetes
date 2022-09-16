@@ -58,6 +58,13 @@ downloadKubectl()
 	esac
 }
 
+downloadMinikube()
+{
+	wget $BASEURL/minikube/releases/latest/minikbbe-linux-amd64
+
+
+}
+
 installKubectl()
 {
 	echo "Making kubectl available"
@@ -82,6 +89,16 @@ installKubectl()
 		;;
 	esac
 }
+
+installMiniKube()
+{
+	cp minikube-linux-amd64 /usr/local/bin/minikube
+
+	chmod 755 /usr/local/bin/minikube
+
+	minikube version
+}
+
 
 error()
 {
@@ -155,6 +172,10 @@ initialise()
 	esac
 }
 
+startMinikube()
+{
+	minikube start
+}
 
 #
 # Main
@@ -163,4 +184,7 @@ initialise()
 initialise
 downloadKubectl
 installKubectl
+downloadMinikube
+installMiniKube
+startMinikube
 cleanup

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -u
+
 #
 # Robert Brockway
 # 16 Sept 2022
@@ -9,6 +11,7 @@
 # Config
 #
 
+AWSBIN=/usr/local/bin/aws
 AWSURL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
 AWSZIP="awscliv2.zip"
 
@@ -48,7 +51,15 @@ downloadAWS()
 installAWS()
 {
 	echo "Installing AWS CLI"
-	aws/install
+	aws/install --update &> /dev/null
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 70
+		;;
+	esac
 }
 
 unzipAWS()
@@ -63,7 +74,6 @@ unzipAWS()
 		error 60
 		;;
 	esac
-
 }
 
 error()
@@ -83,6 +93,9 @@ error()
 		;;
 	60)
 		MESSAGE="Attempt to unzip AWS CLI failed"
+		;;
+	70)
+		MESSAGE="Attempt to install AWS CLI failed"
 		;;
 	90)
 		MESSAGE="Unable to remove working directory"

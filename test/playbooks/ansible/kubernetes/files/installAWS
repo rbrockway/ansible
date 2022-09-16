@@ -50,7 +50,7 @@ downloadAWS()
 
 installAWS()
 {
-	echo "Installing AWS CLI"
+	echo "Installing/Updating AWS CLI"
 	aws/install --update &> /dev/null
 	case $? in
 	0)

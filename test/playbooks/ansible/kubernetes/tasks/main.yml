@@ -11,6 +11,13 @@
      - nodejs
      - npm
 
+#######
+# AWS #
+#######
+
+- name: Install AWS CLI
+  ansible.builtin.command: installAWS
+
 ###########
 # AWS CDK #
 ###########

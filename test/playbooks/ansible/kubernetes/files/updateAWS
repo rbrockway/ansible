@@ -16,7 +16,7 @@ AWSZIP="awscliv2.zip"
 # Functions
 #
 
-downloadAwsCli()
+downloadAWS()
 {
 	echo "Downloading AWS CLI"
 	curl -s "$AWSURL" -o "$AWSZIP" &> /dev/null
@@ -28,16 +28,18 @@ downloadAwsCli()
 		error 50
 		;;
 	esac
+}
 
+unzipAWS()
+{
 	echo "Unzipping $AWSZIP"
-	#unzip $AWSZIP &> /dev/null
-	unzip "$AWSZIP"
+	unzip $AWSZIP &> /dev/null
 	case $? in
 	0)
 		echo "AWS CLI successfully unzipped"
 		;;
 	*)
-		error 55
+		error 60
 		;;
 	esac
 
@@ -57,6 +59,9 @@ error()
 		;;
 	50)
 		MESSAGE="Attempt to download AWS CLI failed"
+		;;
+	60)
+		MESSAGE="Attempt to unzip AWS CLI failed"
 		;;
 	*)
 		MESSAGE="Unknown error"
@@ -95,7 +100,7 @@ initialise()
 		;;
 	esac
 
-	cd $WORKINGDIR
+	cd $WORKDIR
 	case $? in
 	0)
 		echo "Changed directory to $WORKDIR"
@@ -104,7 +109,6 @@ initialise()
 		error 28
 		;;
 	esac
-
 }
 
 
@@ -113,4 +117,5 @@ initialise()
 #
 
 initialise
-downloadAwsCli
+downloadAWS
+unzipAWS

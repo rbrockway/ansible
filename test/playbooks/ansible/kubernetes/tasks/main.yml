@@ -47,5 +47,5 @@
     group: root
     mode: '0755'
 
-- name: Install AWS CLI
-  ansible.builtin.command: /usr/local/sbin/installKubernetes
+#- name: Install AWS CLI
+#  ansible.builtin.command: /usr/local/sbin/installKubernetes

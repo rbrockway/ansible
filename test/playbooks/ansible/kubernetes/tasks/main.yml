@@ -39,7 +39,7 @@
 # Kubernetes #
 ##############
 
-- name: Copy kubectl
+- name: Copy /usr/local/bin/kubectl
   ansible.builtin.copy:
     src: kubectl
     dest: /usr/local/bin/kubectl
@@ -47,7 +47,7 @@
     group: root
     mode: '0755'
 
-- name: Copy minikube
+- name: Copy /usr/local/bin/minikube
   ansible.builtin.copy:
     src: minikube-linux-amd64
     dest: /usr/local/bin/minikube

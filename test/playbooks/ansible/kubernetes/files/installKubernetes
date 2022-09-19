@@ -61,6 +61,14 @@ downloadKubectl()
 downloadMinikube()
 {
 	wget $BASEURL/minikube/releases/latest/minikbbe-linux-amd64
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 60
+		;;
+	esac
 
 
 }
@@ -115,8 +123,11 @@ error()
 	50)
 		MESSAGE="Attempt to download kubectl failed"
 		;;
-	60)
+	55)
 		MESSAGE="Attempt to install kubectl failed"
+		;;
+	60)
+		MESSAGE="Attempt to download minikube failed"
 		;;
 	65)
 		MESSAGE="Attempt to set permissions on kubectl failed"

@@ -7,6 +7,12 @@ using Ansible.  These instructions have been made as simple as possible.
 
 apt install ansible
 
+(2) If you are using VirtualBox then do this inside the VM:
+
+apt install virtualbox
+
+This is necessary for VBoxManage to be available to minkube later on.
+
 (2) Update configuration using ansible-pull
 
 sudo ansible-pull -k -i localhost -U https://github.com/rbrockway/ansible.git test/playbooks/ansible/main.yml

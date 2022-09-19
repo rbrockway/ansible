@@ -11,8 +11,10 @@ set -u
 # Config
 #
 
-BASEURL="https://storage.googleapis.com"
-KUBEURL="$BASEURL/kubernetes/release/release"
+#BASEURL="https://storage.googleapis.com"
+BASEURL="https://dl.k8s.io"
+#KUBEURL="$BASEURL/kubernetes/release/release"
+KUBEURL="$BASEURL/release"
 
 #
 # Functions

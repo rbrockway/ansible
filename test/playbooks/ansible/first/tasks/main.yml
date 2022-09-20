@@ -30,6 +30,7 @@
      - bats
      - binutils
      - blktrace
+     - ca-certificates
      - cgroup-tools
      - cgroupfs-mount
      - curl
@@ -47,6 +48,7 @@
      - ipcalc
      - jq
      - links2
+     - lsb-release
      - ltrace
      - lynx
      - net-tools

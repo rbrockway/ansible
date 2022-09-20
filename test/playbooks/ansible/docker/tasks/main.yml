@@ -1,0 +1,41 @@
+##############
+# Docker GPG #
+##############
+
+- name: Copy /usr/local/sbin/installAWS
+  ansible.builtin.copy:
+    src: installAWS
+    dest: /usr/local/sbin/installAWS
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Install AWS CLI
+  ansible.builtin.command: /usr/local/sbin/installAWS
+
+########################
+# APT Update & Upgrade #
+########################
+
+- name : Apt update & upgrade
+  ansible.builtin.apt:
+    update_cache: yes
+
+############
+# Packages #
+############
+
+- name: Install packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+     - docker-ce
+     - docker-ce-cli
+     - containerd.io
+     - docker-compose-plugin
+
+###########
+# Systemd #
+###########

@@ -9,5 +9,6 @@
     - role: first
     - role: fortune
     #- role: ansible
+    - role: docker
     - role: kubernetes
     - role: last

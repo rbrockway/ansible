@@ -2,16 +2,16 @@
 # Docker GPG #
 ##############
 
-- name: Copy /usr/local/sbin/installAWS
+- name: Copy /usr/local/sbin/installDockerGPG
   ansible.builtin.copy:
-    src: installAWS
-    dest: /usr/local/sbin/installAWS
+    src: installDockerGPG
+    dest: /usr/local/sbin/installDockerGPG
     owner: root
     group: root
     mode: '0755'
 
-- name: Install AWS CLI
-  ansible.builtin.command: /usr/local/sbin/installAWS
+- name: Install Docker GPG
+  ansible.builtin.command: /usr/local/sbin/installDockerGPG
 
 ########################
 # APT Update & Upgrade #

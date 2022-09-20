@@ -39,3 +39,9 @@
 ###########
 # Systemd #
 ###########
+
+- name: Start docer
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: yes

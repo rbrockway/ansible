@@ -1,5 +1,5 @@
 ##############
-# Docker GPG #
+# installNVM #
 ##############
 
 - name: Copy /usr/local/sbin/installNVM

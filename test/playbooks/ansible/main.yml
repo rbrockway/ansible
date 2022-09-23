@@ -12,4 +12,5 @@
     - role: nvm
     - role: docker
     - role: kubernetes
+    - role: helm
     - role: last

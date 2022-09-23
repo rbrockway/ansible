@@ -1,0 +1,14 @@
+##############
+# Docker GPG #
+##############
+
+- name: Copy /usr/local/sbin/installNVM
+  ansible.builtin.copy:
+    src: installNVM
+    dest: /usr/local/sbin/installNVM
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Install NVM
+  ansible.builtin.command: /usr/local/sbin/installNVM

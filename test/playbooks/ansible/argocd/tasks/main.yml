@@ -3,4 +3,8 @@
 ###########
 
 - name: Install Argo CD
-  ansible.builtin.command: curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+  #ansible.builtin.command: curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+  ansible.builtin.get_url:
+    url: https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+    dest: /usr/local/bin/argocd
+    mode: '0755'

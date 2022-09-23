@@ -1,0 +1,6 @@
+########
+# Helm #
+########
+
+- name: Snap install Helm
+  ansible.builtin.command: snap install helm --classic

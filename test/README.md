@@ -15,3 +15,17 @@ $ sudo ansible-pull -k -i localhost -U https://github.com/rbrockway/ansible.git 
 
 It's essentual for ansible-pull to be able to run sudo without an interactive password.  In a default 
 configuration the use of sudo here pre-authenticates sudo for five minutes.
+
+# Problems
+
+## Minikube
+
+Minikube does not play well with NFS mounted home directories in Linux.  If you don't know what this means then you
+don't have one.  A work around is to set the home directory for Mikikube to something else:
+
+$ sudo mkdir /srv/$USER
+$ export MINIKUBE_HOME=/srv/$USER
+
+Reference: 
+
+https://github.com/kubernetes/minikube/issues/11022

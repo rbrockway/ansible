@@ -13,4 +13,5 @@
     - role: docker
     - role: kubernetes
     - role: helm
+    - role: argocd
     - role: last

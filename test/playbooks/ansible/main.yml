@@ -9,6 +9,7 @@
     - role: first
     - role: fortune
     #- role: ansible
+    - role: aws
     - role: nvm
     - role: docker
     - role: kubernetes

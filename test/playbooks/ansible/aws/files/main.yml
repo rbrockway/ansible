@@ -1,0 +1,23 @@
+#######
+# AWS #
+#######
+
+- name: Copy /usr/local/sbin/installAWS
+  ansible.builtin.copy:
+    src: installAWS
+    dest: /usr/local/sbin/installAWS
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Install AWS CLI
+  ansible.builtin.command: /usr/local/sbin/installAWS
+
+###########
+# AWS CDK #
+###########
+
+- name: Install aws-cdk using NPM
+  community.general.npm:
+    name: aws-cdk
+    global: yes

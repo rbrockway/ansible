@@ -21,9 +21,10 @@ configuration the use of sudo here pre-authenticates sudo for five minutes.
 ## Minikube
 
 Minikube does not play well with NFS mounted home directories in Linux.  If you don't know what this means then you
-don't have one.  A work around is to set the home directory for Mikikube to something else:
+don't have one.  A work around is to set the home directory for Minikube to something else:
 
 $ sudo mkdir /srv/$USER
+$ sudo chown $USER /srv/$USER
 $ export MINIKUBE_HOME=/srv/$USER
 
 Reference: 

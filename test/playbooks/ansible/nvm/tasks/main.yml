@@ -12,4 +12,4 @@
 
 - name: Install NVM
   ansible.builtin.command: /usr/local/sbin/installNVM
-  Become: no
+  become: no

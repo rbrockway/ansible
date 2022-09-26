@@ -1,10 +1,75 @@
 #!/bin/bash
 
-mkdir -p /etc/apt/keyrings
+set -u
 
-if [ ! -e /etc/apt/keyrings/docker.gpg ]
-then
-	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-fi
+#
+# Config
+#
 
-echo  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+GPGKEY=https://download.docker.com/linux/ubuntu/gpg
+KEYRING=/etc/apt/keyrings/docker.gpg
+APTFILE=/etc/apt/sources.list.d/docker.list
+
+#
+# Functions
+#
+
+downloadKeyring()
+{
+	if [ ! -e $KEYRING ]
+	then
+		curl -fsSL $GPGKEY | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+		case $? in
+		0)
+			true
+			;;
+		*)
+			error 70
+			;;
+		esac
+	fi
+
+
+}
+
+error()
+{
+	echo "Error: $1"
+	logger "Error: $1"
+	exit $1
+}
+
+initialise()
+{
+	mkdir -p /etc/apt/keyrings
+	case $? in
+	0)
+		true
+		;;
+	*)
+		error 50
+		;;
+	esac
+
+}
+
+installKeyring()
+{
+	echo  "deb [arch=$(dpkg --print-architecture) signed-by=$KEYRING] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee $APTFILE > /dev/null
+	case $? in
+	0)
+		true
+		;;
+	*)
+		error 90
+		;;
+	esac
+}
+
+#
+# Main
+#
+
+initialise
+downloadKeyring
+installKeyring

@@ -101,12 +101,12 @@ error()
 		MESSAGE="Unable to remove working directory"
 		;;
 	*)
-		MESSAGE="Unknown error"
+		MESSAGE="No message"
 		;;
 	esac
 
-	echo $MESSAGE
-	logger $MESSAGE
+	echo "Error $1: $MESSAGE"
+	logger "Error $1: $MESSAGE"
 }
 
 initialise()

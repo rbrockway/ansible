@@ -48,6 +48,13 @@ downloadAWS()
 	esac
 }
 
+error()
+{
+	echo "Error: $1"
+	logger "Error: $1"
+	exit $1
+}
+
 installAWS()
 {
 	echo "Installing/Updating AWS CLI"
@@ -60,27 +67,6 @@ installAWS()
 		error 70
 		;;
 	esac
-}
-
-unzipAWS()
-{
-	echo "Unzipping $AWSZIP"
-	unzip $AWSZIP &> /dev/null
-	case $? in
-	0)
-		echo "Success!"
-		;;
-	*)
-		error 60
-		;;
-	esac
-}
-
-error()
-{
-	echo "Error $1:"
-	logger "Error $1"
-	exit $1
 }
 
 initialise()
@@ -122,6 +108,19 @@ initialise()
 	esac
 }
 
+unzipAWS()
+{
+	echo "Unzipping $AWSZIP"
+	unzip $AWSZIP &> /dev/null
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 60
+		;;
+	esac
+}
 
 #
 # Main

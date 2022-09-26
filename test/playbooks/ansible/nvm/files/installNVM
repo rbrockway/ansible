@@ -7,13 +7,77 @@
 downloadScript
 {
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+	case $? in
+	0)
+		true
+		;;
+	*)
+		error 50
+		;;
+	esac
 }
 
 error()
 {
-    echo "Error $1:"
-    logger "Error $1"
+    echo "Error: $1"
+    logger "Error: $1"
     exit $1
+}
+
+installNVM()
+{
+	nvm install --lts
+	case $? in
+	0)
+		true
+		;;
+	*)
+		error 90
+		;;
+	esac
+
+}
+
+loadNVM()
+{
+	if [ -d "$HOME/.nvm" ]; then
+		# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+		export NVM_DIR="$HOME/.nvm"
+
+		# This loads nvm
+		[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+		# This loads nvm bash_completion
+		[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+	fi
+}
+
+reinitialiseBASH()
+{
+	source ~/.bashrc
+	case $? in
+	0)
+		true
+		;;
+	*)
+		error 70
+		;;
+	esac
+
+}
+
+verifyNVM()
+{
+	command -v nvm
+	case $? in
+	0)
+		true
+		;;
+	*)
+		error 80
+		;;
+	esac
+
 }
 
 #
@@ -21,20 +85,7 @@ error()
 #
 
 downloadScript
-
-if [ -d "$HOME/.nvm" ]; then
-  # export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-  export NVM_DIR="$HOME/.nvm"
-
-  # This loads nvm
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-  # This loads nvm bash_completion
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-fi
-
-source ~/.bashrc
-
-command -v nvm
-
-nvm install --lts
+loadNVM
+reinitialiseBASH
+verifyNVM
+installNVM

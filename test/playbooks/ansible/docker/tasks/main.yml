@@ -40,7 +40,7 @@
 # Systemd #
 ###########
 
-- name: Start docer
+- name: Start docker
   ansible.builtin.systemd:
     name: docker
     state: started

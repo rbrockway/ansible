@@ -78,35 +78,9 @@ unzipAWS()
 
 error()
 {
-	case $1 in
-	20)
-		MESSAGE="Command $2 not available"
-		;;
-	25)
-		MESSAGE="Unable to create working directory"
-		;;
-	28)
-		MESSAGE="Unable to change directory to working directory"
-		;;
-	50)
-		MESSAGE="Attempt to download AWS CLI failed"
-		;;
-	60)
-		MESSAGE="Attempt to unzip AWS CLI failed"
-		;;
-	70)
-		MESSAGE="Attempt to install AWS CLI failed"
-		;;
-	90)
-		MESSAGE="Unable to remove working directory"
-		;;
-	*)
-		MESSAGE="No message"
-		;;
-	esac
-
-	echo "Error $1: $MESSAGE"
-	logger "Error $1: $MESSAGE"
+	echo "Error $1:"
+	logger "Error $1"
+	exit $1
 }
 
 initialise()

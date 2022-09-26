@@ -103,47 +103,42 @@ installKubectl()
 installMiniKube()
 {
 	cp minikube-linux-amd64 /usr/local/bin/minikube
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 70
+		;;
+	esac
 
 	chmod 755 /usr/local/bin/minikube
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 73
+		;;
+	esac
 
 	minikube version
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 76
+		;;
+	esac
 }
 
 
 error()
 {
-	case $1 in
-	20)
-		MESSAGE="Command $2 not available"
-		;;
-	25)
-		MESSAGE="Unable to create working directory"
-		;;
-	28)
-		MESSAGE="Unable to change directory to working directory"
-		;;
-	50)
-		MESSAGE="Attempt to download kubectl failed"
-		;;
-	55)
-		MESSAGE="Attempt to install kubectl failed"
-		;;
-	60)
-		MESSAGE="Attempt to download minikube failed"
-		;;
-	65)
-		MESSAGE="Attempt to set permissions on kubectl failed"
-		;;
-	90)
-		MESSAGE="Unable to remove working directory"
-		;;
-	*)
-		MESSAGE="Unknown error"
-		;;
-	esac
-
-	echo $MESSAGE
-	logger $MESSAGE
+    echo "Error $1:"
+    logger "Error $1"
+    exit $1
 }
 
 initialise()
@@ -159,7 +154,7 @@ initialise()
 			echo "Command $I available"
 			;;
 		*)
-			error 20 $I
+			error 20
 			;;
 		esac
 	done
@@ -188,6 +183,14 @@ initialise()
 startMinikube()
 {
 	minikube start
+	case $? in
+	0)
+		echo "Success!"
+		;;
+	*)
+		error 80
+		;;
+	esac
 }
 
 #

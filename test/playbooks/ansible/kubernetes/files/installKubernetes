@@ -50,7 +50,8 @@ downloadKubectl()
 	esac
 
 	echo "Downloading kubectl"
-	curl -sLO "$KUBEURL/$VERSION/bin/linux/amd64/kubectl"
+	#curl -sLO "$KUBEURL/$VERSION/bin/linux/amd64/kubectl"
+	curl -sLO "https://dl.k8s.io/v1.25.2/bin/linux/amd64/kubectl"
 	case $? in
 	0)
 		echo "Success!"

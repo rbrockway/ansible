@@ -8,16 +8,6 @@ set -u
 #
 
 #
-# Config
-#
-
-#BASEURL="https://storage.googleapis.com"
-BASEURL="https://dl.k8s.io"
-#KUBEURL="$BASEURL/kubernetes/release/release"
-#KUBEURL="$BASEURL/release"
-KUBEURL="$BASEURL"
-
-#
 # Functions
 #
 
@@ -39,7 +29,7 @@ cleanup()
 downloadKubectl()
 {
 	echo "Getting kubectl version"
-	VERSION=$(curl -s "$KUBEURL/stable.txt")
+	VERSION="https://storage.googleapis.com/kubernetes-release/release/stable.txt"
 	case $? in
 	0)
 		echo "Version: $VERSION"
@@ -50,8 +40,8 @@ downloadKubectl()
 	esac
 
 	echo "Downloading kubectl"
-	#curl -sLO "$KUBEURL/$VERSION/bin/linux/amd64/kubectl"
-	curl -sLO "https://dl.k8s.io/v1.25.2/bin/linux/amd64/kubectl"
+	#curl -sLO "https://dl.k8s.io/v1.25.2/bin/linux/amd64/kubectl"
+	curl -sLO "https://dl.k8s.io/$VERSION/bin/linux/amd64/kubectl"
 	case $? in
 	0)
 		echo "Success!"
@@ -64,7 +54,6 @@ downloadKubectl()
 
 downloadMinikube()
 {
-	#wget $BASEURL/minikube/releases/latest/minikbbe-linux-amd64
 	wget "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
 	case $? in
 	0)

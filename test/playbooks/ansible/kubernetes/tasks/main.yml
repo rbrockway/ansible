@@ -30,9 +30,9 @@
     group: root
     mode: '0755'
 
-- name: Start Minikube
-  ansible.builtin.command: /usr/local/bin/minikube start
-  become: no
+#- name: Start Minikube
+#  ansible.builtin.command: /usr/local/bin/minikube start
+#  become: no
 
 #- name: Copy /usr/local/sbin/installKubernetes
 #  ansible.builtin.copy:

@@ -64,7 +64,8 @@ downloadKubectl()
 
 downloadMinikube()
 {
-	wget $BASEURL/minikube/releases/latest/minikbbe-linux-amd64
+	#wget $BASEURL/minikube/releases/latest/minikbbe-linux-amd64
+	wget "https://storage.googleapis.com/minikube/releases/latest/minikbbe-linux-amd64"
 	case $? in
 	0)
 		echo "Success!"

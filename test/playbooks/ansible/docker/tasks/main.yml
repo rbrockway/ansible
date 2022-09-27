@@ -13,14 +13,6 @@
 - name: Install Docker GPG
   ansible.builtin.command: /usr/local/sbin/installDockerGPG
 
-########################
-# APT Update & Upgrade #
-########################
-
-- name : Apt update & upgrade
-  ansible.builtin.apt:
-    update_cache: yes
-
 ############
 # Packages #
 ############

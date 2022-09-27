@@ -183,19 +183,6 @@ initialise()
 	esac
 }
 
-startMinikube()
-{
-	minikube start
-	case $? in
-	0)
-		echo "Success!"
-		;;
-	*)
-		error 80
-		;;
-	esac
-}
-
 #
 # Main
 #
@@ -205,5 +192,4 @@ downloadKubectl
 installKubectl
 downloadMinikube
 installMiniKube
-startMinikube
 cleanup

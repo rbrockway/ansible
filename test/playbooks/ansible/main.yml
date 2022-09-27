@@ -8,7 +8,7 @@
   roles:
     - role: first
     - role: fortune
-    #- role: ansible
+    - role: ansible
     - role: nodejs
     - role: aws
     - role: nvm

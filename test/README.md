@@ -7,7 +7,7 @@ Commands to be executed start with '$' to represent the shell.
 
 (1) Install Ansible
 
-$ apt install ansible
+$ sudo apt install ansible
 
 (3) Install/update using ansible-pull
 

@@ -21,3 +21,4 @@
   community.general.npm:
     name: aws-cdk
     global: no
+  become: no

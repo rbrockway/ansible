@@ -17,12 +17,12 @@
 # AWS CDK #
 ###########
 
-#- name: Install aws-cdk using NPM
-#  ansible.builtin.command: npm install aws-cdk
-#  become: no
-
 - name: Install aws-cdk using NPM
-  community.general.npm:
-    name: aws-cdk
-    global: no
+  ansible.builtin.command: npm install aws-cdk
   become: no
+
+#- name: Install aws-cdk using NPM
+#  community.general.npm:
+#    name: aws-cdk
+#    global: no
+#  become: no

@@ -1,7 +1,7 @@
 Below are the instructions for installing Kubernetes on Ubuntu 2204 
 using Ansible.  These instructions have been made as simple as possible.
 
-Commands to be executed start with '$' to represent the shell.
+Commands to be executed start with '$' to represent the shell.  Only copy the line after the '$'.
 
 # Installation Instructions
 
@@ -11,7 +11,7 @@ $ sudo apt install ansible
 
 (3) Install/update using ansible-pull
 
-$ sudo ansible-pull -k -i localhost -U https://github.com/rbrockway/ansible.git test/playbooks/ansible/main.yml
+$ ansible-pull -K -i localhost -U https://github.com/rbrockway/ansible.git test/playbooks/ansible/main.yml
 
 It's essentual for ansible-pull to be able to run sudo without an interactive password.  In a default 
 configuration the use of sudo here pre-authenticates sudo for five minutes.

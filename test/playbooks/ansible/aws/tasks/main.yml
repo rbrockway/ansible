@@ -18,7 +18,7 @@
 ###########
 
 - name: Install aws-cdk using NPM
-  ansible.builtin.command: npm install aws-cdk
+  ansible.builtin.command: ~/.nvm/versions/node/v16.17.1/bin/npm install aws-cdk
   become: no
 
 #- name: Install aws-cdk using NPM
